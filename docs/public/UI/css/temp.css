@@ -1,0 +1,50 @@
+body {
+	background-color: #DFEAED;
+}
+
+/* Navbar CSS */
+.topbar_pages ul {
+	background-color: #CCCCCC;
+}
+
+.topbar_pages ul a {
+	color: inherit;
+}
+
+.topbar_pages ul a:hover {
+	background-color: white !important;
+}
+
+/* Navbar > Dropdown */
+.topbar_pages ul .dropdown_content {
+	background-color: #E7EDF0;
+}
+
+.topbar_pages ul .dropdown:hover .dropdown_title {
+	background-color: white !important;
+}
+
+/* Event CSS */
+.event {
+	background-color: #E7EDF0;
+}
+
+.event_title {
+	background-color: #CCCCCC;
+}
+
+.span_link a {
+	color: #0050ff;
+}
+
+.span_link a:hover {
+	color: #0000aa;
+}
+
+.event_body {
+	background-color: inherit;
+}
+
+.event_date {
+	color: #777777;
+}
