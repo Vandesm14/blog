@@ -1,0 +1,5 @@
+# Ignore all files starting with "."
+.*
+
+# Ignore all ".env" files
+*.env
