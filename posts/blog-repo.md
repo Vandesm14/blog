@@ -1,0 +1,1 @@
+If any of you remember my old blog, I promised I would release it as a Github repository. That has since been an empty promise. Right now, I am working hard to finalize the new design for shipping to Github.

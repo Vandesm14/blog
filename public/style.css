@@ -2,224 +2,223 @@
 
 body {
 	font-family: ubuntu;
-	/* padding: 10px; */
 	padding: 0;
 	margin: 0;
-	background-color: white;
+	background-color: rgb(234, 255, 195);
 }
 
-.title_container {
-	/* border-bottom: 4px solid black; */
-	padding: 10px;
-	padding-top: 10px;
-	padding-bottom: 0;
+.title-container {
+	position: fixed;
+	top: 0;
 	margin-bottom: -10px;
+	width: 100%;
+	height: 90px;
+	background-color: rgba(0, 80, 0, 0.2);
+	border-bottom: 4px solid green;
+	transition: 100ms;
+}
+
+/* NOTE: Waiting on static pages */
+.title-container:hover {
+	border: none;
+	transition: 100ms;
 }
 
 .title {
+	display: inline-block;
+	text-decoration: none;
 	font-size: 36px;
 	font-weight: 900;
-	/* margin-bottom: 20px; */
-	margin-left: 1%;
+	margin: 12px;
+	color: green;
+	width: max-content;
 }
-
-.title_image {
-	width: 36px;
-	height: 36px;
-	display: inline;
-}
-
-/* @media screen and (max-width: 600px) {
-	.title_image {
-		display: block;
-		margin: auto;
-	}
-
-	.title {
-		margin: auto;
-	}
-} */
 
 .subtitle {
-	font-size: 30px;
-	font-style: italic;
-}
-
-/* Navbar CSS */
-
-.topbar_pages ul {
-	background-color: #312F2F;
-}
-
-.topbar_pages ul a {
-	font-size: 20px;
-	display: inline-block;
-	padding: 10px;
-	padding-top: 14px;
-	padding-bottom: 14px;
+	display: block;
 	text-decoration: none;
+	font-size: 20px;
+	margin: 0;
+	margin-top: -14px;
+	margin-left: 20px;
+	margin-bottom: 0;
+	color: rgba(0, 128, 0, 0.8);
+	width: max-content;
+}
+
+.title-container:hover .subtitle {
+	margin-bottom: 6px;
+}
+
+.navbar {
+	transform: scaleY(0) scaleX(0) translate(-50%);
+	opacity: 0;
+	height: max-content;
+	font-size: 24px;
+	border-top: px solid rgb(0, 120, 0);
+	background-color: rgba(0, 0, 0, 0.3);
+	color: green;
+	overflow: hidden;
+	transition: 300ms;
+}
+
+.title-container:hover .navbar {
+	transform: scaleY(1) scaleX(1);
+	opacity: 1;
+}
+
+.navbar ul {
+	margin: 0;
+	padding: 10px;
+	font-size: 26px;
+}
+
+.navbar ul li::before {
+	content: none;
+}
+
+.navbar ul li {
+	display: inline;	
+	background-color: rgb(0, 190, 0);
+	padding: 2px 8px;
 	color: white;
-	transition: 300ms;
 }
 
-.topbar_pages ul a:hover {
-	background-color: #007fff !important;
-	transition: 300ms;
+.navbar ul li:hover {
+	color: rgb(0, 190, 0);
+	background-color: white;
 }
 
-.topbar_pages ul a.new:after {
-	background-image: url('/assets/images/warning.png');
-	background-size: 10px 10px;
-	width: 10px;
-	height: 10px;
-	margin-left: 1px;
-	margin-bottom: 4px;
-	content: "";
-	display: inline-block;
+.navbar ul li a {
+	color: white;
+	text-decoration: none;
 }
 
-
-/* .topbar_pages ul a.info {
-	float: right;
-	margin-right: 4%;
-} #Navbar# Separates info buttons to right side */
-
-/* Navbar > Dropdown */
-.topbar_pages ul .dropdown {
-	display: inline-block;
+.navbar ul li:hover a {
+	color: rgb(0, 190, 0);
 }
 
-.topbar_pages ul .dropdown_content {
-	display: none;
-	position: absolute;
-	padding: 0;
-	text-align: left;
-	background-color: #E7EDF0;
+.posts-container {
+	margin-top: 100px;
 }
 
-.topbar_pages ul .dropdown_content a {
-	display: block;
-}
-
-.topbar_pages ul .dropdown:hover .dropdown_content {
-	display: block;
-	max-width: 200px;
-}
-
-/* Begin Event CSS */
-.event {
-	border: 3px solid rgb(160, 160, 160);
-	border-radius: 10px;
+.post {
+	border: 1px solid rgb(160, 160, 160);
+	/* border-radius: 4px; */
 	padding: 6px;
-	margin: 10px;
+	margin: 10px auto;
+	width: 70%;
+	background-color: white;
 }
 
-.event_title {
-	/* font-size: 24px; */
+.post-title {
+	font-size: 2.8vh;
+	border-bottom: 2px solid lightgray;
+	margin: 10px;
+	padding-bottom: 10px;
+}
+
+.post-date {
+	color: #9e9e9e;
+	font-size: 1.4vh;
+}
+
+.post-body {
+	font-size: 2.1vh;
+	padding: 30px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.post-body > p {
+	display: block;
+	margin: 4px;
+	padding: 0;
+}
+
+.post-link {
+	font-size: 1.8vh;
+	color: rgb(0, 190, 255);
+}
+
+.post-link:hover {
+	color: #00f;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.page {
+	border: 1px solid rgb(160, 160, 160);
+	/* border-radius: 4px; */
+	padding: 6px;
+	margin: 10px auto;
+	width: 96%;
+	background-color: white;
+	display: none;
+}
+
+.page-title {
 	font-size: 3.2vh;
 	border-bottom: 2px solid lightgray;
 	margin: 10px;
 	padding-bottom: 10px;
 }
 
-.span_title::before {
-	content: "(";
+.page-date {
+	color: #9e9e9e;
+	font-size: 1.7vh;
 }
 
-.span_title::after {
-	content: ")";
-}
-
-.event_body {
-	/* font-size: 18px; */
+.page-body {
 	font-size: 2.4vh;
 	padding: 30px;
 	padding-top: 0;
-	padding-top: 0;
+	padding-bottom: 0;
 }
 
-.read_more {
-	font-size: 2.6vh;
-	color: rgb(0, 190, 255);
+.page-body > p {
+	display: block;
+	margin: 4px;
+	padding: 0;
 }
 
-.read_more:hover {
-	color: #00f;
-	cursor: pointer;
-	text-decoration: underline;
-}
-
-.event_date {
-	color: #9e9e9e;
-	font-size: 2.4vh;
-}
-
-.event_exp {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.event_exp:hover,
-.event_exp:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-/* End Events CSS */
-
-/* Begin Modal CSS */
-.modal_container {
-	position: fixed;
-	z-index: 1;
-	left: 5%;
-	top: 20%;
-	width: 90%;
-	height: 90%;
-	overflow: auto;
-}
-
-.modal {
-	display: none;
+.loadMore-container {
+	width: 100%;
 	margin: 0 auto;
-	position: relative;
+}
+
+#loadMore {
+	display: block;
+	margin: 8px auto;
+	width: 50%;
+	height: 50px;
+	outline: none;
+	font-size: 3.2vh;
+	color: rgb(0, 190, 0);
 	background-color: white;
-	border: 3px solid rgb(160, 160, 160);
-	border-radius: 10px;
-	padding: 6px;
+	border: 2px solid lightgray;
+	transition: 100ms ease-out;
 }
 
-.modal_title {
-	/* font-size: 24px; */
-	font-size: 4vh;
-	border-bottom: 2px solid lightgray;
-	margin: 10px;
-	padding-bottom: 10px;
+#loadMore:hover {
+	box-shadow: 0px 5px 10px -1px rgba(0,0,0,0.50);
+	transition: 300ms ease-out;
+	/* transform: scale(1.1); */
 }
 
-.modal_body {
-	/* font-size: 18px; */
-	font-size: 3vh;
-	padding: 30px;
-	padding-top: 0;
+#loadMore:focus, #loadMore:active {
+	background-color: rgb(0, 190, 0);
+	color: white;
+	border: none;
+	transition: 300ms ease-out;
 }
 
-.modal_date {
-	color: #9e9e9e;
+#loadMore .loadMore-arrow {
+	opacity: 0;
+	transition: 100ms ease-out;
 }
 
-.close {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
+#loadMore:hover .loadMore-arrow {
+	opacity: 1;
+	transition: 300ms ease-out;
 }
-
-.close:hover,
-.close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-}
-/* End Modal CSS */

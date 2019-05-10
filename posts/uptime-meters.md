@@ -1,0 +1,1 @@
+I have a few sites that are of public interest, but sometimes they go down. I am planning on creating a page on this site that will display the status of each site along with an optional message about the site (regarding the uptime). This might be harder to implement as the api for uptimerobot is a little wonky. Don't Worry though, I'll keep you posted!

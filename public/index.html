@@ -4,38 +4,62 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>V14 Blog</title>
-	<link href="/style.css" rel="stylesheet" type="text/css">
-	<link href="/assets/images/fav.png" rel="shortcut icon">
-	<!-- <link href="/UI/css/blue.css" rel="stylesheet" -->
-	<script src="/UI/ddmenu.js" type="text/javascript"></script>
+	<title>Vandesm14</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<script src="/socket.io/socket.io.js">
+
+	</script>
 </head>
 
-<body onload="getAllRecords()">
-	<div class="title_container">
-		<img src="/assets/images/fav.png" class="title_image">
-		<span class="title">Vandesm14</span>
+<body>
+	<div class="title-container">
+		<a class="title" href="/">Shane Vandegrift</a>
+		<p class="subtitle">@Vandesm14</p>
+		<div class="navbar">
+			<ul>
+				<li><a href="/page/about">About</a></li>
+				<li><a href="/page/projects">Projects</a></li>
+				<li><a href="/page/status">Status</a></li>
+				<li><a href="https://repl.it/@Vandesm14">Repl.it</a></li>
+			</ul>
+		</div>
 	</div>
-	<div class="topbar_pages" id="pages">
-		<a id="ddmenuLink" href="/UI/navbar.html"></a>
+	<div class="posts-container" id="posts">
+
+	</div>
+	<div class="page" id="page">
 	</div>
 
-	<div id="event_stream">
+	<div class="loadMore-container">
+		<button onclick="loadMore()" id="loadMore">
+			<span class="loadMore-arrow">▼</span>
+			Load More
+			<span class="loadMore-arrow">▼</span>
+		</button>
 	</div>
 
-	<template class="event_template">
-		<div class="event">
-			<div class="event_exp"></div>
-			<div class="event_title">
-				<span class="span_title"></span>
-			</div>
-			<div class="event_body"></div>
-			<a class="read_more">Read More</a>
-			<div class="event_date"></div>
+	<script src="../js/marked.min.js">
+
+	</script>
+	<script src="../js/jquery.min.js">
+
+	</script>
+	<script src="script.js">
+
+	</script>
+	<template id="template">
+		<div class="post">
+			<p class="post-title">{{title}}</p>
+			<div class="post-body">{{body}}</div>
+			<p class="post-date">{{date}}</p>
+			<a class="post-link" href="/post/{{titleURL}}">{{share}}</a>
 		</div>
 	</template>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="/script.js"></script>
+	<template id="singleTemplate">
+		<p class="page-title">{{title}}</p>
+		<div class="page-body">{{body}}</div>
+		<p class="page-date">{{date}}</p>
+	</template>
 </body>
 
 </html>
