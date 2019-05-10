@@ -47,8 +47,6 @@ const config = {
 var allPosts = [];
 var configPosts = [];
 var posts = [];
-var html = [];
-var template = fs.readFileSync(__dirname + '/template.html', 'utf8');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
