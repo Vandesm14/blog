@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./db');
@@ -13,7 +14,7 @@ const config = {
 	},
 	readPost: (name) => {
 		let ret;
-		for (i in configPosts) {
+		for (let i in configPosts) {
 			if (configPosts[i].name === name) {
 				ret = configPosts[i];
 			}
@@ -29,8 +30,8 @@ const config = {
 	updatePosts: () => {
 		let files = fs.readdirSync(__dirname + '/posts');
 		let obj = [];
-		for (i in configPosts) {
-			for (k in files) {
+		for (let i in configPosts) {
+			for (let k in files) {
 				if (files[k] === configPosts[i].name + '.md') {
 					obj.push(copy(configPosts[i]));
 				}
@@ -70,7 +71,7 @@ app.get('/', (req, res) => {
 // });
 
 app.get('/post/*', (req, res) => {
-	res.sendFile(__dirname + '/public/index.html')
+	res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/all/:level', (req, res) => {
@@ -96,7 +97,7 @@ function getAllPosts() {
 	let files = fs.readdirSync(__dirname + '/posts');
 	allPosts = [];
 
-	for (i in files) {
+	for (let i in files) {
 		let obj = {};
 		obj.title = toTitleCase(files[i].substr(0, files[i].length - 3).replace(/\-/g, ' '));
 		obj.body = fs.readFileSync(__dirname + '/posts/' + files[i], 'utf8').replace('\n', '<br>');
@@ -122,7 +123,7 @@ function getSinglePost(name) {
 }
 
 fs.watch(__dirname + '/posts', (eventType, filename) => {
-	let files = fs.readdirSync(__dirname + '/posts')
+	let files = fs.readdirSync(__dirname + '/posts');
 	if (files.length > allPosts.length) {
 		config.newPost(filename.substr(0, filename.length - 3), new Date().toISOString());
 	} else if (files.length < allPosts.length) {
