@@ -1,0 +1,3 @@
+# Custom Blog Server
+This blog is really simple to use:
+Just add a `.md` file into the `posts` folder to create a post. The title of the file will be the title of your post. After you create the file, the server will automatically update the client accordingly. You can also edit the post anytime and it will be modified on the client instantly. Deleting posts is easy, just remove the file. The server will automatically refresh the posts shown on the client, removing the deleted post from the view.
