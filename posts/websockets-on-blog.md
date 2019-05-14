@@ -1,1 +1,0 @@
-This blog is **live**. Anything I edit will be automatically pushed to the client! Just wanted to test ths system as well (this post is kinda short).
