@@ -4,6 +4,7 @@ var level = 1;
 var url = window.location.href;
 var thisurl = url.split('/');
 var socket = io();
+var vh = $(window).height() / 100;
 
 socket.on('new', function (res) {
 	if (!thisurl.includes('post')) {
@@ -31,19 +32,28 @@ function getPosts() {
 			for (i in posts) {
 				// posts[i].date = new Date(posts[i].date).toLocaleString();
 				posts[i].date = new Date(posts[i].date).toLocaleTimeString([], {day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute:'2-digit'});
-				if ($(window).width() <= 600 && posts[i].body.length > 366) {
-					posts[i].body = posts[i].body.substr(0, 366).split(' ');
-					posts[i].body = posts[i].body.slice(0, posts[i].body.length - 1).join(' ') + '...';
-					posts[i].readMore = true;
-				} else if ($(window).width() > 600 && posts[i].body.length > 1000) {
-					posts[i].body = posts[i].body.substr(0, 1000).split(' ');
-					posts[i].body = posts[i].body.slice(0, posts[i].body.length - 1).join(' ') + '...';
-					posts[i].readMore = true;
-				}
 
 				posts[i].body = marked(posts[i].body);
+
+				let hold = template;
+				hold = hold.replace(/\{\{title\}\}/g, posts[i].title);
+				hold = hold.replace(/\{\{date\}\}/g, posts[i].date);
+				hold = hold.replace(/\{\{body\}\}/g, posts[i].body);
+				hold = hold.replace(/\{\{titleURL\}\}/g, posts[i].title.toLowerCase().replace(/\s/g, '-'));
+				if (posts[i].readMore) {
+					hold = hold.replace(/\{\{share\}\}/g, 'Read More');
+				} else {
+					hold = hold.replace(/\{\{share\}\}/g, 'Share');
+				}
+
+				$('#posts').append(hold);
+				
+				if ($('#posts').children('.post:eq(' + i + ')').innerHeight() > 60 * vh) {
+					$('#posts').children('.post:eq(' + i + ')').addClass('fade');
+					$('#posts').children('.post:eq(' + i + ')').children('.post-link').text('Read More');
+				}
 			}
-			$('#posts').html(renderHTML().join('\n'));
+			// $('#posts').html(renderHTML().join('\n'));
 		},
 		error: (e) => {
 			alert('An error occured while fetching posts\n\n' + JSON.stringify(e));
