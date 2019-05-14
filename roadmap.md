@@ -11,8 +11,10 @@
 
 ## Pre-Release (v1.0)
 
-- :exclamation: Line breaks in md files don't show up correctly on rendered posts
+- :arrows_counterclockwise: Rewrite Post DB system as either lowdb, or custom db system.
+- :exclamation::arrows_counterclockwise: Line breaks in md files don't show up correctly on rendered posts
 - :arrows_counterclockwise: Static pages
+`Just use url's to posts instead?`
 - :x: Site statuses page
 - :x: API for editing/creating posts
 - :grey_question: Comment section
