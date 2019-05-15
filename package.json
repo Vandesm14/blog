@@ -11,8 +11,6 @@
   "dependencies": {
     "express": "latest",
     "body-parser": "latest",
-    "request": "latest",
-    "socket.io": "latest",
-    "lowdb": "latest"
+    "socket.io": "latest"
   }
 }
