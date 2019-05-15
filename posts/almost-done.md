@@ -1,1 +1,0 @@
-After two days stocked full of working on this blog, it is safe to say that I am almost done. Just a few more things on the roadmap before advertizing and release of the repository (which will be on the projects page). The last things on the list are Static pages and duplicate post name support. (Any possibly an api to edit/create posts)

@@ -11,8 +11,7 @@
 
 ## Pre-Release (v1.0)
 
-- :arrows_counterclockwise: Rewrite Post DB system as either lowdb, or custom db system.
-- :exclamation::arrows_counterclockwise: Line breaks in md files don't show up correctly on rendered posts
+- :white_check_mark: Rewrite Post DB system as either lowdb, or custom db system.
 - :arrows_counterclockwise: Static pages
 `Just use url's to posts instead?`
 - :x: Site statuses page
