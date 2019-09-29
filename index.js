@@ -77,7 +77,7 @@ app.get('/p/:title', (req, res) => {
 
 app.get('/page/:title', (req, res) => {
 	let title = req.params.title;
-
+	res.send('request not found');
 });
 
 app.get('/sort', (req, res) => {
@@ -115,7 +115,7 @@ app.get('/sort', (req, res) => {
 
 app.get('/search', (req, res) => {
 	let search = req.query.q;
-
+	
 });
 
 app.get('/rss', (req, res) => {
