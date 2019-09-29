@@ -27,7 +27,6 @@ app.get('/', (req, res) => {
 	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
 	for (let i in posts) {
-		console.log(posts[i].file);
 		formattedPosts.push(
 			ejs.render(itemTemplate, {
 				file: posts[i].file,
@@ -54,6 +53,7 @@ app.get('/p/:title', (req, res) => {
 		let content = fs.readFileSync('files/' + title + '.md', 'utf8');
 		let base = fs.readFileSync('templates/base/post.ejs', 'utf8');
 		let postTemplate = fs.readFileSync('templates/items/post.ejs', 'utf8');
+		let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 		let post = allPosts.find(obj => obj.file === title);
 		if (post === undefined) {
 			res.render(__dirname + '/templates/base/error.ejs', {
@@ -66,7 +66,9 @@ app.get('/p/:title', (req, res) => {
 				date: post.date,
 				time: post.time.split(' ')[0],
 				ampm: post.time.split(' ')[1],
-				rtags: 'ejs render failure',
+				rtags: post.tags.map(el => {
+					return tagTemplate.replace(/<%=tag%>/g, el);
+				}).join(', '),
 				content: converter.makeHtml(content)
 			})));
 		}
@@ -80,12 +82,60 @@ app.get('/page/:title', (req, res) => {
 
 app.get('/sort', (req, res) => {
 	let sort = req.query.q;
+	let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
+	let posts = [];
+	let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
+	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
+	let formattedPosts = [];
 
+	sortedPosts.forEach(el => {
+		let hold = JSON.parse(fs.readFileSync('files/' + el.file + '.json', 'utf8'));
+		if (hold !== undefined && hold.tags !== undefined) {
+			if (hold.tags.includes(sort)) {
+				posts.push(el);
+			}
+		}
+	});
+	for (let i in posts) {
+		formattedPosts.push(
+			ejs.render(itemTemplate, {
+				file: posts[i].file,
+				title: posts[i].title,
+				date: posts[i].date,
+				time: posts[i].time,
+				ampm: posts[i].ampm,
+				rtags: posts[i].tags.map(el => {
+					return tagTemplate.replace(/<%=tag%>/g, el);
+				}).join(', ')
+			})
+		);
+	}
+	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 });
 
 app.get('/search', (req, res) => {
 	let search = req.query.q;
 
+});
+
+app.get('/rss', (req, res) => {
+	let base = fs.readFileSync('rss/base.xml', 'utf8');
+	let itemTemplate = fs.readFileSync('rss/template.xml', 'utf8');
+	let posts = sortedPosts.slice(0, 10);
+	let formattedPosts = [];
+	for (let i in posts) {
+		formattedPosts.push(
+			ejs.render(itemTemplate, {
+				file: posts[i].file,
+				title: posts[i].title,
+				date: posts[i].date,
+				time: posts[i].time,
+				ampm: posts[i].ampm
+			})
+		);
+	}
+	res.setHeader('content-type', 'text/xml');
+	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 });
 
 app.listen(3000, () => console.log('server started'));
@@ -122,6 +172,14 @@ const db = {
 		fs.writeFileSync('db.json', JSON.stringify(dbPosts), 'utf8');
 	}
 };
+
+// fs.watch('files', (eventType, filename) => {
+// 	if ()
+// 	let files = fs.readdirSync(__dirname + '/posts');
+// 	db.updatePosts();
+// 	getAllPosts();
+// 	sortAllPosts();
+// });
 
 startup();
 
@@ -163,7 +221,7 @@ function getAllPosts() {
 
 function sortAllPosts() {
 	let newPosts = copy(allPosts);
-	newPosts.sort((a, b) => (new Date(a.date) < new Date(b.date)) ? 1 : -1);
+	newPosts.sort((a, b) => (new Date(a.date + ' ' + a.time) < new Date(b.date + ' ' + b.time)) ? 1 : -1);
 	sortedPosts = copy(newPosts);
 }
 

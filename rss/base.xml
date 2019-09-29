@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+	<title>Vandesm14's Blog</title>
+	<link>https://blog.vandesm14.ml</link>
+	<description>Vandesm14 aka Shane Vandegrift</description>
+	<%=items%>
+</channel>
+
+</rss>
