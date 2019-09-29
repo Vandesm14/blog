@@ -27,7 +27,10 @@ app.get('/', (req, res) => {
 	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
 	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
-	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
+	// res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
+	res.send(ejs.render(base, {
+		items: formattedPosts.join('\n')
+	}));
 });
 
 app.get('/p/:title', (req, res) => {
@@ -47,24 +50,40 @@ app.get('/p/:title', (req, res) => {
 				error: 'Post does not exist.'
 			});
 		} else {
-			res.send(base.replace('<%=data%>', ejs.render(postTemplate, {
-				file: post.file,
-				title: post.title,
-				date: post.date,
-				time: post.time.split(' ')[0],
-				ampm: post.time.split(' ')[1],
-				rtags: post.tags.map(el => {
-					return tagTemplate.replace(/<%=tag%>/g, el);
-				}).join(', '),
-				content: converter.makeHtml(content)
-			})));
+			// res.send(base.replace('<%=data%>', ejs.render(postTemplate, {
+			// 	file: post.file,
+			// 	title: post.title,
+			// 	date: post.date,
+			// 	time: post.time.split(' ')[0],
+			// 	ampm: post.time.split(' ')[1],
+			// 	rtags: post.tags.map(el => {
+			// 		return tagTemplate.replace(/<%=tag%>/g, el);
+			// 	}).join(', '),
+			// 	content: converter.makeHtml(content)
+			// })));
+			res.send(ejs.render(base, {
+				data: ejs.render(postTemplate, {
+					file: post.file,
+					title: post.title,
+					date: post.date,
+					time: post.time.split(' ')[0],
+					ampm: post.time.split(' ')[1],
+					rtags: post.tags.map(el => {
+						return tagTemplate.replace(/<%=tag%>/g, el);
+					}).join(', '),
+					content: converter.makeHtml(content)
+				})
+			}));
 		}
 	}
 });
 
 app.get('/page/:title', (req, res) => {
 	let title = req.params.title;
-	res.send('request not found');
+	let base = fs.readFileSync('templates/base/error.ejs', 'utf8');
+	res.send(ejs.render(base, {
+		error: 'Unhandled Request'
+	}));
 });
 
 app.get('/sort', (req, res) => {
@@ -84,7 +103,10 @@ app.get('/sort', (req, res) => {
 		}
 	});
 	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
-	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
+	// res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
+	res.send(ejs.render(base, {
+		items: formattedPosts.join('\n')
+	}));
 });
 
 app.post('/search', (req, res) => {
@@ -105,7 +127,10 @@ app.post('/search', (req, res) => {
 		}
 	});
 	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
-	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
+	// res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
+	res.send(ejs.render(base, {
+		items: formattedPosts.join('\n')
+	}));
 });
 
 app.get('/rss', (req, res) => {
@@ -125,7 +150,10 @@ app.get('/rss', (req, res) => {
 		);
 	}
 	res.setHeader('content-type', 'text/xml');
-	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
+	// res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
+	res.send(ejs.render(base, {
+		items: formattedPosts.join('\n')
+	}));
 });
 
 app.listen(3000, () => console.log('server started'));
