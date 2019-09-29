@@ -163,7 +163,7 @@ a:visited {
 }
 
 /* --------List-------- */
-.list {
+.list-container {
 	display: flex;
 	overflow: scroll;
 	flex-direction: column;
