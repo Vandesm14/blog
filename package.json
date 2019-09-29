@@ -3,14 +3,13 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
+  "scripts": {},
   "author": "",
   "license": "MIT",
   "dependencies": {
     "express": "latest",
     "body-parser": "latest",
-    "socket.io": "latest"
+    "ejs": "latest",
+    "showdown": "latest"
   }
 }

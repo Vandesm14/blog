@@ -15,6 +15,6 @@
 - :arrows_counterclockwise: Static pages
 `Just use url's to posts instead?`
 - :x: Site statuses page
-- :x: API for editing/creating posts
+- :grey_question: API for editing/creating posts
 - :grey_question: Comment section
 - :grey_question: Same-titled post algorithm
