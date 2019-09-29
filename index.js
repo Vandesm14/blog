@@ -21,24 +21,27 @@ app.use(express.static('public'));
 app.use('/p', express.static('public'));
 
 app.get('/', (req, res) => {
-	res.sendFile(__dirname + '/public/index.html');
-	console.log(db);
-});
-
-app.get('/example', (req, res) => {
-	let content = fs.readFileSync('files/first.md', 'utf8');
-	let base = fs.readFileSync('templates/base/post.ejs', 'utf8');
-	let postTemplate = fs.readFileSync('templates/items/post.ejs', 'utf8');
-	// template = ejs.compile(template);
-	res.send(base.replace('<%=data%>', ejs.render(postTemplate, {
-		file: 'first',
-		title: 'Hello World',
-		date: '9/27/2019',
-		time: '9:19',
-		ampm: 'PM',
-		rtags: 'tags go here',
-		content: converter.makeHtml(content)
-	})));
+	let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
+	let posts = sortedPosts.slice(0, 10);
+	let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
+	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
+	let formattedPosts = [];
+	for (let i in posts) {
+		console.log(posts[i].file);
+		formattedPosts.push(
+			ejs.render(itemTemplate, {
+				file: posts[i].file,
+				title: posts[i].title,
+				date: posts[i].date,
+				time: posts[i].time,
+				ampm: posts[i].ampm,
+				rtags: posts[i].tags.map(el => {
+					return tagTemplate.replace(/<%=tag%>/g, el);
+				}).join(', ')
+			})
+		);
+	}
+	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 });
 
 app.get('/p/:title', (req, res) => {
@@ -87,7 +90,6 @@ app.get('/search', (req, res) => {
 
 app.listen(3000, () => console.log('server started'));
 
-
 // --------------------
 const db = {
 	getPostByName: (name) => {
@@ -133,23 +135,25 @@ function getAllPosts() {
 	let files = fs.readdirSync('files');
 	let hold;
 	allPosts = [];
-
-	for (let i in files) {
+	for (let i of files.filter(el => {
+			return el.match('.json') === null;
+		})) {
 		let obj = {};
-		if (files[i].match('.json') === null) {
-			if (fs.existsSync('files/' + files[i].substr(0, files[i].length - 3) + '.json')) {
-				hold = JSON.parse(fs.readFileSync('files/' + files[i].substr(0, files[i].length - 3) + '.json', 'utf8'));
-				if (hold.title !== undefined) {
-					obj.title = hold.title;
-				} else {
-					obj.title = toTitleCase(files[i].substr(0, files[i].length - 3).replace(/\-/g, ' '));
-				}
+		if (i.match('.json') === null) {
+			hold = JSON.parse(fs.readFileSync('files/' + i.substr(0, i.length - 3) + '.json', 'utf8'));
+			if (hold !== undefined && hold.title !== undefined) {
+				obj.title = hold.title;
 			} else {
-				obj.title = toTitleCase(files[i].substr(0, files[i].length - 3).replace(/\-/g, ' '));
+				obj.title = toTitleCase(i.substr(0, i.length - 3).replace(/\-/g, ' '));
 			}
-			obj.file = files[i].replace('.md', '');
-			obj.content = fs.readFileSync('files/' + files[i], 'utf8').replace('\n', '<br>');
-			obj.date = db.getPostByName(files[i]).date;
+			if (hold !== undefined && hold.tags !== undefined) {
+				obj.tags = hold.tags;
+			} else {
+				obj.tags = ['#'];
+			}
+			obj.file = i.replace('.md', '');
+			obj.content = fs.readFileSync('files/' + i, 'utf8').replace('\n', '<br>');
+			obj.date = db.getPostByName(i).date;
 			obj.time = new Date(obj.date).toLocaleString().split(', ')[1].replace(/:\d\d([ ap]|$)/, ' ');
 			obj.date = new String(new Date(obj.date)).split(' ').splice(0, 3).join(' ');
 			allPosts.push(obj);
