@@ -26,20 +26,7 @@ app.get('/', (req, res) => {
 	let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
 	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
-	for (let i in posts) {
-		formattedPosts.push(
-			ejs.render(itemTemplate, {
-				file: posts[i].file,
-				title: posts[i].title,
-				date: posts[i].date,
-				time: posts[i].time,
-				ampm: posts[i].ampm,
-				rtags: posts[i].tags.map(el => {
-					return tagTemplate.replace(/<%=tag%>/g, el);
-				}).join(', ')
-			})
-		);
-	}
+	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
 	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 });
 
@@ -96,20 +83,7 @@ app.get('/sort', (req, res) => {
 			}
 		}
 	});
-	for (let i in posts) {
-		formattedPosts.push(
-			ejs.render(itemTemplate, {
-				file: posts[i].file,
-				title: posts[i].title,
-				date: posts[i].date,
-				time: posts[i].time,
-				ampm: posts[i].ampm,
-				rtags: posts[i].tags.map(el => {
-					return tagTemplate.replace(/<%=tag%>/g, el);
-				}).join(', ')
-			})
-		);
-	}
+	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
 	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 });
 
@@ -123,24 +97,14 @@ app.post('/search', (req, res) => {
 
 	search = search.toLowerCase().split(' ');
 	sortedPosts.forEach(el => {
-		if (search.some(el2 => el.title.toLowerCase().split(' ').includes(el2) || el.file.toLowerCase().split(' ').includes(el2))) {
+		if (search.some(
+				el2 => el.title.toLowerCase().split(' ').includes(el2) ||
+				el.file.toLowerCase().split(' ').includes(el2)
+			)) {
 			posts.push(el);
 		}
 	});
-	for (let i in posts) {
-		formattedPosts.push(
-			ejs.render(itemTemplate, {
-				file: posts[i].file,
-				title: posts[i].title,
-				date: posts[i].date,
-				time: posts[i].time,
-				ampm: posts[i].ampm,
-				rtags: posts[i].tags.map(el => {
-					return tagTemplate.replace(/<%=tag%>/g, el);
-				}).join(', ')
-			})
-		);
-	}
+	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
 	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 });
 
@@ -238,7 +202,7 @@ function getAllPosts() {
 			obj.file = i.replace('.md', '');
 			obj.content = fs.readFileSync('files/' + i, 'utf8').replace('\n', '<br>');
 			obj.date = db.getPostByName(i).date;
-			obj.time = new Date(obj.date).toLocaleString().split(', ')[1].replace(/:\d\d([ ap]|$)/, ' ');
+			obj.time = new Date(obj.date).toLocaleString().split(' ')[1].replace(/:\d\d([ ap]|$)/, ' ');
 			obj.date = new String(new Date(obj.date)).split(' ').splice(0, 3).join(' ');
 			allPosts.push(obj);
 		}
@@ -283,4 +247,23 @@ function queryRecord(obj, field, query) {
 			return obj[i];
 		}
 	}
+}
+
+function renderPosts(posts, itemTemplate, tagTemplate) {
+	let formattedPosts = [];
+	for (let i in posts) {
+		formattedPosts.push(
+			ejs.render(itemTemplate, {
+				file: posts[i].file,
+				title: posts[i].title,
+				date: posts[i].date,
+				time: posts[i].time,
+				ampm: posts[i].ampm,
+				rtags: posts[i].tags.map(el => {
+					return tagTemplate.replace(/<%=tag%>/g, el);
+				}).join(', ')
+			})
+		);
+	}
+	return formattedPosts;
 }
