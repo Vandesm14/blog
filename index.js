@@ -113,9 +113,35 @@ app.get('/sort', (req, res) => {
 	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 });
 
-app.get('/search', (req, res) => {
-	let search = req.query.q;
-	
+app.post('/search', (req, res) => {
+	let search = req.body.q;
+	let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
+	let posts = [];
+	let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
+	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
+	let formattedPosts = [];
+
+	search = search.toLowerCase().split(' ');
+	sortedPosts.forEach(el => {
+		if (search.some(el2 => el.title.toLowerCase().split(' ').includes(el2) || el.file.toLowerCase().split(' ').includes(el2))) {
+			posts.push(el);
+		}
+	});
+	for (let i in posts) {
+		formattedPosts.push(
+			ejs.render(itemTemplate, {
+				file: posts[i].file,
+				title: posts[i].title,
+				date: posts[i].date,
+				time: posts[i].time,
+				ampm: posts[i].ampm,
+				rtags: posts[i].tags.map(el => {
+					return tagTemplate.replace(/<%=tag%>/g, el);
+				}).join(', ')
+			})
+		);
+	}
+	res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 });
 
 app.get('/rss', (req, res) => {
