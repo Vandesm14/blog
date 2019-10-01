@@ -8,7 +8,10 @@ body {
 	font-family: Noto Sans, sans-serif;
 }
 
-body, div, h1, p {
+body,
+div,
+h1,
+p {
 	margin: 0;
 	padding: 0;
 }
@@ -95,7 +98,8 @@ a:visited {
 	transform: translateY(0);
 }
 
-.logo-container, .sidebar {
+.logo-container,
+.sidebar {
 	margin: 0 auto;
 }
 
@@ -104,6 +108,7 @@ a:visited {
 	align-items: center;
 	flex-direction: row;
 	justify-content: space-between;
+
 	/* max-width:6vw; */
 	/* max-height:6vw; */
 	width: 100%;
@@ -213,25 +218,23 @@ a:visited {
 	overflow: scroll;
 	flex-direction: column;
 	margin: 0 auto;
+
 	/* margin-top: 10px; */
 	padding-top: 20px;
 	width: 60%;
 }
 
-a.post-title {
-	width: min-content;
-	font-size: 50px;
+.post-title {
+	width: max-content;
 	color: #484747;
 	font-weight: 900;
+	font-size: 50px;
 	font-family: Calibri;
-}
-
-.post-title:hover {
-	text-decoration: underline;
 }
 
 .post-details {
 	display: flex;
+
 	/* flex-direction: row; */
 	flex-direction: column;
 	justify-content: space-between;
@@ -259,7 +262,7 @@ a.post-title {
 
 .post-content p {
 	margin: 1em 0;
+	color: #5d5d5d;
 	font-size: 18px;
 	font-family: Apple;
-	color: #5d5d5d;
 }
