@@ -2,10 +2,10 @@
 <rss version="2.0">
 
 <channel>
-	<title>Vandesm14's Blog</title>
+	<title>Shane Vandegrift</title>
 	<link>https://blog.vandesm14.ml</link>
-	<description>Vandesm14 aka Shane Vandegrift</description>
-	<%=items%>
+	<description>Shane Vandegrift aka Vandesm14</description>
+	<%=data%>
 </channel>
 
 </rss>

@@ -5,6 +5,7 @@ const ejs = require('ejs');
 const showdown = require('showdown');
 
 var converter = new showdown.Converter();
+converter.setFlavor('github');
 
 var dbPosts = [];
 var allPosts = [];
@@ -21,77 +22,74 @@ app.use(express.static('public'));
 app.use('/p', express.static('public'));
 
 app.get('/', (req, res) => {
-	let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
 	let posts = sortedPosts.slice(0, 10);
-	let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
-	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
+	// let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
+	// let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
+	// let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
-	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
-	// res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
-	res.send(ejs.render(base, {
-		items: formattedPosts.join('\n')
+	formattedPosts = renderPosts(posts, ejstemp.items.item, ejstemp.items.tag);
+	// res.send(ejs.render(ejstemp.base.index, {
+	// 	data: formattedPosts.join('\n')
+	// }));
+	res.send(renderPage('index', {
+		data: formattedPosts.join('\n')
 	}));
 });
 
 app.get('/p/:title', (req, res) => {
 	let title = req.params.title;
 	if (fs.existsSync('files/' + title + '.md') === false) {
-		res.render(__dirname + '/templates/base/error.ejs', {
-			error: 'Post does not exist.'
-		});
+		// res.render(__dirname + '/templates/base/error.ejs', {
+		// 	data: 'Post does not exist.'
+		// });
+		res.send(renderPage('error', {
+			data: 'Post does not exist.'
+		}));
 	} else {
 		let content = fs.readFileSync('files/' + title + '.md', 'utf8');
-		let base = fs.readFileSync('templates/base/post.ejs', 'utf8');
-		let postTemplate = fs.readFileSync('templates/items/post.ejs', 'utf8');
-		let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
+		// let base = fs.readFileSync('templates/base/post.ejs', 'utf8');
+		// let postTemplate = fs.readFileSync('templates/items/post.ejs', 'utf8');
+		// let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 		let post = allPosts.find(obj => obj.file === title);
 		if (post === undefined) {
 			res.render(__dirname + '/templates/base/error.ejs', {
-				error: 'Post does not exist.'
+				data: 'Post does not exist.'
 			});
 		} else {
-			// res.send(base.replace('<%=data%>', ejs.render(postTemplate, {
-			// 	file: post.file,
-			// 	title: post.title,
-			// 	date: post.date,
-			// 	time: post.time.split(' ')[0],
-			// 	ampm: post.time.split(' ')[1],
-			// 	rtags: post.tags.map(el => {
-			// 		return tagTemplate.replace(/<%=tag%>/g, el);
-			// 	}).join(', '),
-			// 	content: converter.makeHtml(content)
-			// })));
-			res.send(ejs.render(base, {
-				data: ejs.render(postTemplate, {
+			// res.send(ejs.render(ejstemp.base.post, {
+			// 	data: ejs.render(ejstemp.items.post, {
+			// 		file: post.file,
+			// 		title: post.title,
+			// 		date: post.date,
+			// 		time: post.time,
+			// 		rtags: post.tags.map(el => {
+			// 			return ejstemp.items.tag.replace(/<%=tag%>/g, el);
+			// 		}).join(', '),
+			// 		content: converter.makeHtml(content)
+			// 	})
+			// }));
+			res.send(renderPage('post', {
+				data: ejs.render(ejstemp.items.post, {
 					file: post.file,
 					title: post.title,
 					date: post.date,
-					time: post.time.split(' ')[0],
-					ampm: post.time.split(' ')[1],
+					time: post.time,
 					rtags: post.tags.map(el => {
-						return tagTemplate.replace(/<%=tag%>/g, el);
+						return ejstemp.items.tag.replace(/<%=tag%>/g, el);
 					}).join(', '),
-					content: converter.makeHtml(content)
+					content: converter.makeHtml(content).replace(/\n/g, '<br>')
 				})
 			}));
 		}
 	}
 });
 
-app.get('/page/:title', (req, res) => {
-	let title = req.params.title;
-	let base = fs.readFileSync('templates/base/error.ejs', 'utf8');
-	res.send(ejs.render(base, {
-		error: 'Unhandled Request'
-	}));
-});
-
 app.get('/sort', (req, res) => {
 	let sort = req.query.q;
-	let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
 	let posts = [];
-	let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
-	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
+	// let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
+	// let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
+	// let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
 
 	sortedPosts.forEach(el => {
@@ -102,34 +100,39 @@ app.get('/sort', (req, res) => {
 			}
 		}
 	});
-	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
-	// res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
-	res.send(ejs.render(base, {
-		items: formattedPosts.join('\n')
+	formattedPosts = renderPosts(posts, ejstemp.items.item, ejstemp.items.tag);
+	// res.send(ejs.render(ejstemp.base.index, {
+	// 	data: formattedPosts.join('\n')
+	// }));
+	res.send(renderPage('index', {
+		data: formattedPosts.join('\n')
 	}));
 });
 
 app.post('/search', (req, res) => {
 	let search = req.body.q;
-	let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
 	let posts = [];
-	let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
-	let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
+	// let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
+	// let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
+	// let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
 
 	search = search.toLowerCase().split(' ');
-	sortedPosts.forEach(el => {
+	sortedPosts.forEach(post => {
 		if (search.some(
-				el2 => el.title.toLowerCase().split(' ').includes(el2) ||
-				el.file.toLowerCase().split(' ').includes(el2)
+				keyword => post.title.toLowerCase().split(' ').includes(keyword) ||
+				post.file.toLowerCase().split(' ').includes(keyword) ||
+				post.tags.join(' ').toLowerCase().split(' ').includes(keyword)
 			)) {
-			posts.push(el);
+			posts.push(post);
 		}
 	});
-	formattedPosts = renderPosts(posts, itemTemplate, tagTemplate);
-	// res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
-	res.send(ejs.render(base, {
-		items: formattedPosts.join('\n')
+	formattedPosts = renderPosts(posts, ejstemp.items.item, ejstemp.items.tag);
+	// res.send(ejs.render(ejstemp.base.index, {
+	// 	data: formattedPosts.join('\n')
+	// }));
+	res.send(renderPage('index', {
+		data: formattedPosts.join('\n')
 	}));
 });
 
@@ -144,21 +147,36 @@ app.get('/rss', (req, res) => {
 				file: posts[i].file,
 				title: posts[i].title,
 				date: posts[i].date,
-				time: posts[i].time,
-				ampm: posts[i].ampm
+				time: posts[i].time
 			})
 		);
 	}
 	res.setHeader('content-type', 'text/xml');
-	// res.send(base.replace('<%=items%>', formattedPosts.join('\n')));
 	res.send(ejs.render(base, {
-		items: formattedPosts.join('\n')
+		data: formattedPosts.join('\n')
 	}));
 });
 
 app.listen(3000, () => console.log('server started'));
 
 // --------------------
+const ejstemp = {
+	base: {
+		index: fs.readFileSync('templates/base/index.ejs', 'utf8'),
+		post: fs.readFileSync('templates/base/post.ejs', 'utf8'),
+		error: fs.readFileSync('templates/base/error.ejs', 'utf8')
+	},
+	includes: {
+		header: fs.readFileSync('templates/includes/header.ejs', 'utf8'),
+		sidebar: fs.readFileSync('templates/includes/sidebar.ejs', 'utf8')
+	},
+	items: {
+		item: fs.readFileSync('templates/items/item.ejs', 'utf8'),
+		post: fs.readFileSync('templates/items/post.ejs', 'utf8'),
+		tag: fs.readFileSync('templates/items/tag.ejs', 'utf8')
+	}
+}
+
 const db = {
 	getPostByName: (name) => {
 		console.log(dbPosts);
@@ -190,14 +208,6 @@ const db = {
 		fs.writeFileSync('db.json', JSON.stringify(dbPosts), 'utf8');
 	}
 };
-
-// fs.watch('files', (eventType, filename) => {
-// 	if ()
-// 	let files = fs.readdirSync(__dirname + '/posts');
-// 	db.updatePosts();
-// 	getAllPosts();
-// 	sortAllPosts();
-// });
 
 startup();
 
@@ -234,8 +244,7 @@ function getAllPosts() {
 			obj.file = i.replace('.md', '');
 			obj.content = fs.readFileSync('files/' + i, 'utf8').replace('\n', '<br>');
 			obj.date = db.getPostByName(i).date;
-			obj.time = new Date(obj.date).toLocaleString().split(' ')[1].replace(/:\d\d([ ap]|$)/, ' ');
-			obj.ampm = new Date(obj.date).toLocaleString().split(' ')[2];
+			obj.time = formatAMPM(obj.date);
 			obj.date = new String(new Date(obj.date)).split(' ').splice(0, 3).join(' ');
 			allPosts.push(obj);
 		}
@@ -291,7 +300,6 @@ function renderPosts(posts, itemTemplate, tagTemplate) {
 				title: posts[i].title,
 				date: posts[i].date,
 				time: posts[i].time,
-				ampm: posts[i].ampm,
 				rtags: posts[i].tags.map(el => {
 					return tagTemplate.replace(/<%=tag%>/g, el);
 				}).join(', ')
@@ -299,4 +307,27 @@ function renderPosts(posts, itemTemplate, tagTemplate) {
 		);
 	}
 	return formattedPosts;
+}
+
+function renderPage(page, obj) {
+	let data = obj.data;
+	let ret = ejs.render(ejstemp.base[page], {
+		sidebar: ejstemp.includes.sidebar,
+		header: ejstemp.includes.header,
+		data: data
+	});
+	return ret;
+}
+
+function formatAMPM(date) {
+	date = new Date(date);
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+	hours = hours + 8;
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
 }

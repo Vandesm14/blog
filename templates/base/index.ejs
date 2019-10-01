@@ -10,37 +10,11 @@
 
 <body>
 	<div class="app">
-		<div class="side">
-			<div class="logo-container">
-				<a href="/">Home</a>
-				<img class="logo" src="/images/site/logo.png">
-			</div>
-			<div class="sidebar">
-				<div class="sidebar-section">
-					<a href="/sort?q=updates">Updates</a>
-					<a href="/sort?q=projects">Projects</a>
-					<a href="/sort?q=articles">Articles</a>
-				</div>
-				<div class="sidebar-section">
-					<a href="/page/about">About</a>
-					<a href="/rss">RSS</a>
-				</div>
-			</div>
-		</div>
+		<%-sidebar%>
 		<div class="vertical">
-			<div class="header">
-				<div class="titlebox">
-					<h1 class="title">Shane Vandegrift</h1>
-					<p class="subtitle">aka Vandesm14</p>
-				</div>
-				<div class="searchbox">
-					<form action="/search" method="POST">
-						<input type="text" placeholder="Search" name="q">
-					</form>
-				</div>
-			</div>
+			<%-header%>
 			<div class="list-container">
-				<%-items%>
+				<%-data%>
 			</div>
 		</div>
 	</div>
