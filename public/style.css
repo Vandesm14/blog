@@ -8,10 +8,7 @@ body {
 	font-family: Noto Sans, sans-serif;
 }
 
-body,
-div,
-h1,
-p {
+body, div, h1, p {
 	margin: 0;
 	padding: 0;
 }
@@ -98,8 +95,7 @@ a:visited {
 	transform: translateY(0);
 }
 
-.logo-container,
-.sidebar {
+.logo-container, .sidebar {
 	margin: 0 auto;
 }
 
@@ -109,7 +105,7 @@ a:visited {
 	flex-direction: row;
 	justify-content: space-between;
 
-	/* max-width:6vw; */
+/* max-width:6vw; */
 	/* max-height:6vw; */
 	width: 100%;
 }
@@ -219,7 +215,7 @@ a:visited {
 	flex-direction: column;
 	margin: 0 auto;
 
-	/* margin-top: 10px; */
+/* margin-top: 10px; */
 	padding-top: 20px;
 	width: 60%;
 }
@@ -235,7 +231,7 @@ a:visited {
 .post-details {
 	display: flex;
 
-	/* flex-direction: row; */
+/* flex-direction: row; */
 	flex-direction: column;
 	justify-content: space-between;
 	color: grey;
