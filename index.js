@@ -172,9 +172,9 @@ const db = {
 		let dbNames = getFields(dbObj, 'name');
 		for (let i in fileNames) {
 			if (fileNames[i].match('.json') === null) {
-				if (dbNames.indexOf(fileNames[i]) !== -1) {
+				if (dbNames.indexOf(fileNames[i]) !== -1) { // Create new file
 					ret.push(dbObj[dbNames.indexOf(fileNames[i])]);
-				} else {
+				} else { // Push old file
 					ret.push({
 						name: fileNames[i],
 						date: new Date().toISOString()
@@ -216,7 +216,11 @@ function getAllPosts() {
 		})) {
 		let obj = {};
 		if (i.match('.json') === null) {
-			hold = JSON.parse(fs.readFileSync('files/' + i.substr(0, i.length - 3) + '.json', 'utf8'));
+			if (fs.existsSync('files/' + i.substr(0, i.length - 3) + '.json')) {
+				hold = JSON.parse(fs.readFileSync('files/' + i.substr(0, i.length - 3) + '.json', 'utf8'));
+			} else {
+				hold = {title: undefined, date: undefined, tags: undefined};
+			}
 			if (hold !== undefined && hold.title !== undefined) {
 				obj.title = hold.title;
 			} else {
@@ -231,6 +235,7 @@ function getAllPosts() {
 			obj.content = fs.readFileSync('files/' + i, 'utf8').replace('\n', '<br>');
 			obj.date = db.getPostByName(i).date;
 			obj.time = new Date(obj.date).toLocaleString().split(' ')[1].replace(/:\d\d([ ap]|$)/, ' ');
+			obj.ampm = new Date(obj.date).toLocaleString().split(' ')[2];
 			obj.date = new String(new Date(obj.date)).split(' ').splice(0, 3).join(' ');
 			allPosts.push(obj);
 		}
