@@ -13,13 +13,9 @@ body, div, h1, p {
 	padding: 0;
 }
 
-a {
-	color: blue;
+a, a:visited {
+	color: #00d;
 	text-decoration: none;
-}
-
-a:visited {
-	color: blue;
 }
 
 /* --------Scrollbar-------- */
@@ -142,11 +138,14 @@ a:visited {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin: 0 1%;
+
+/* margin: 0 1%; */
+	/* border-bottom: 3px solid lightgrey; */
 	padding: 1%;
-	width: 96%;
+
+/* width: 96%; */
 	height: min-content;
-	border-bottom: 3px solid lightgrey;
+	background-color: #f3f3f3;
 }
 
 .titlebox {
@@ -155,12 +154,12 @@ a:visited {
 }
 
 .title {
-	font-size: 26px;
+	font-size: 32px;
 }
 
 .subtitle {
 	color: grey;
-	font-size: 14px;
+	font-size: 18px;
 }
 
 /* --------List-------- */
@@ -168,6 +167,8 @@ a:visited {
 	display: flex;
 	overflow: scroll;
 	flex-direction: column;
+	margin-bottom: 10px;
+	padding-top: 10px;
 	width: 100%;
 }
 
@@ -214,6 +215,8 @@ a:visited {
 	overflow: scroll;
 	flex-direction: column;
 	margin: 0 auto;
+	margin-bottom: 10px;
+	padding: 0 20%;
 
 /* margin-top: 10px; */
 	padding-top: 20px;
