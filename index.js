@@ -146,7 +146,7 @@ app.get('/rss', (req, res) => {
 			ejs.render(itemTemplate, {
 				file: posts[i].file,
 				title: posts[i].title,
-				date: posts[i].date,
+				date: new Date(posts[i].utcDate).toUTCString(),
 				time: posts[i].time
 			})
 		);
@@ -198,7 +198,6 @@ function updateEjsTemp() {
 
 const db = {
 	getPostByName: (name) => {
-		console.log(dbPosts);
 		// return dbPosts.find(obj => obj.name === name);
 		return queryRecord(dbPosts, 'name', name);
 	},
@@ -263,6 +262,7 @@ function getAllPosts() {
 			obj.file = i.replace('.md', '');
 			obj.content = fs.readFileSync('files/' + i, 'utf8').replace('\n', '<br>');
 			obj.date = db.getPostByName(i).date;
+			obj.utcDate = obj.date;
 			obj.time = formatAMPM(obj.date);
 			obj.date = new String(new Date(obj.date)).split(' ').splice(0, 3).join(' ');
 			allPosts.push(obj);
