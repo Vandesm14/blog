@@ -157,7 +157,7 @@ app.get('/rss', (req, res) => {
 	}));
 });
 
-app.listen(5500, () => console.log('server started'));
+app.listen(3000, () => console.log('server started'));
 
 // --------------------
 var ejstemp = {
