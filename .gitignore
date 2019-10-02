@@ -88,7 +88,7 @@ typings/
 .fusebox/
 
 # LowDB Local Files
-db.json
+# db.json
 
 # DynamoDB Local files
 .dynamodb/
