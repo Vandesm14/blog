@@ -162,6 +162,42 @@ a, a:visited {
 	font-size: 18px;
 }
 
+@media only screen and (max-device-width : 640px) {
+	.title {
+		font-size: 28px;
+	}
+	
+	.subtitle {
+		color: grey;
+		font-size: 14px;
+	}
+
+	.side {
+		position: absolute;
+		left: 0vw;
+		margin: 0 0;
+		padding: 1vh 0.5vw;
+		width: 23vw;
+		height: calc(98vh - 2px);
+		border: 1px solid lightgrey;
+		background-color: #f3f3f3;
+		transition: 400ms ease;
+		transform: translateX(-13vw);
+	}
+
+	.logo {
+		max-width: 9vw;
+		max-height: 9vw;
+	}
+
+	.vertical {
+		display: flex;
+		flex-direction: column;
+		margin-left: 12vw;
+		width: 90vw;
+	}
+}
+
 /* --------List-------- */
 .list-container {
 	display: flex;
