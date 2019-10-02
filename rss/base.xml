@@ -5,7 +5,7 @@
 	<title>Shane Vandegrift</title>
 	<link>https://blog.vandesm14.ml</link>
 	<description>Shane Vandegrift aka Vandesm14</description>
-	<%=data%>
+	<%-data%>
 </channel>
 
 </rss>
