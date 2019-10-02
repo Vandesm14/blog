@@ -157,10 +157,10 @@ app.get('/rss', (req, res) => {
 	}));
 });
 
-app.listen(3000, () => console.log('server started'));
+app.listen(5500, () => console.log('server started'));
 
 // --------------------
-const ejstemp = {
+var ejstemp = {
 	base: {
 		index: fs.readFileSync('templates/base/index.ejs', 'utf8'),
 		post: fs.readFileSync('templates/base/post.ejs', 'utf8'),
@@ -175,6 +175,25 @@ const ejstemp = {
 		post: fs.readFileSync('templates/items/post.ejs', 'utf8'),
 		tag: fs.readFileSync('templates/items/tag.ejs', 'utf8')
 	}
+};
+
+function updateEjsTemp() {
+	ejstemp = {
+		base: {
+			index: fs.readFileSync('templates/base/index.ejs', 'utf8'),
+			post: fs.readFileSync('templates/base/post.ejs', 'utf8'),
+			error: fs.readFileSync('templates/base/error.ejs', 'utf8')
+		},
+		includes: {
+			header: fs.readFileSync('templates/includes/header.ejs', 'utf8'),
+			sidebar: fs.readFileSync('templates/includes/sidebar.ejs', 'utf8')
+		},
+		items: {
+			item: fs.readFileSync('templates/items/item.ejs', 'utf8'),
+			post: fs.readFileSync('templates/items/post.ejs', 'utf8'),
+			tag: fs.readFileSync('templates/items/tag.ejs', 'utf8')
+		}
+	};
 }
 
 const db = {
@@ -262,6 +281,11 @@ fs.watch('files', (eventType, filename) => {
 	db.updatedb();
 	getAllPosts();
 	sortAllPosts();
+});
+
+fs.watch('templates', (eventType, filename) => {
+	updateEjsTemp();
+	console.log('Updated Templates');
 });
 
 function toTitleCase(str) {
