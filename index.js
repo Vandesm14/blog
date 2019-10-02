@@ -272,7 +272,7 @@ function getAllPosts() {
 
 function sortAllPosts() {
 	let newPosts = copy(allPosts);
-	newPosts.sort((a, b) => (new Date(a.date + ' ' + a.time) < new Date(b.date + ' ' + b.time)) ? 1 : -1);
+	newPosts.sort((a, b) => (new Date(a.utcDate) < new Date(b.utcDate)) ? 1 : -1);
 	sortedPosts = copy(newPosts);
 }
 
