@@ -1,0 +1,6 @@
+<item>
+	<title><%=title%></title>
+	<link>https://blog.vandesm14.ml/p/<%=file%></link>
+	<description><%=title%></description>
+	<pubDate><%=date%></pubDate>
+</item>
