@@ -23,14 +23,8 @@ app.use('/p', express.static('public'));
 
 app.get('/', (req, res) => {
 	let posts = sortedPosts.slice(0, 10);
-	// let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
-	// let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
-	// let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
 	formattedPosts = renderPosts(posts, ejstemp.items.item, ejstemp.items.tag);
-	// res.send(ejs.render(ejstemp.base.index, {
-	// 	data: formattedPosts.join('\n')
-	// }));
 	res.send(renderPage('index', {
 		data: formattedPosts.join('\n')
 	}));
@@ -39,35 +33,17 @@ app.get('/', (req, res) => {
 app.get('/p/:title', (req, res) => {
 	let title = req.params.title;
 	if (fs.existsSync('files/' + title + '.md') === false) {
-		// res.render(__dirname + '/templates/base/error.ejs', {
-		// 	data: 'Post does not exist.'
-		// });
 		res.send(renderPage('error', {
 			data: 'Post does not exist.'
 		}));
 	} else {
 		let content = fs.readFileSync('files/' + title + '.md', 'utf8');
-		// let base = fs.readFileSync('templates/base/post.ejs', 'utf8');
-		// let postTemplate = fs.readFileSync('templates/items/post.ejs', 'utf8');
-		// let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 		let post = allPosts.find(obj => obj.file === title);
 		if (post === undefined) {
 			res.render(__dirname + '/templates/base/error.ejs', {
 				data: 'Post does not exist.'
 			});
 		} else {
-			// res.send(ejs.render(ejstemp.base.post, {
-			// 	data: ejs.render(ejstemp.items.post, {
-			// 		file: post.file,
-			// 		title: post.title,
-			// 		date: post.date,
-			// 		time: post.time,
-			// 		rtags: post.tags.map(el => {
-			// 			return ejstemp.items.tag.replace(/<%=tag%>/g, el);
-			// 		}).join(', '),
-			// 		content: converter.makeHtml(content)
-			// 	})
-			// }));
 			res.send(renderPage('post', {
 				data: ejs.render(ejstemp.items.post, {
 					file: post.file,
@@ -78,6 +54,7 @@ app.get('/p/:title', (req, res) => {
 						return ejstemp.items.tag.replace(/<%=tag%>/g, el);
 					}).join(', '),
 					content: converter.makeHtml(content).replace(/\n/g, '<br>')
+					// content: converter.makeHtml(content)
 				})
 			}));
 		}
@@ -87,9 +64,6 @@ app.get('/p/:title', (req, res) => {
 app.get('/sort', (req, res) => {
 	let sort = req.query.q;
 	let posts = [];
-	// let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
-	// let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
-	// let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
 
 	sortedPosts.forEach(el => {
@@ -101,9 +75,6 @@ app.get('/sort', (req, res) => {
 		}
 	});
 	formattedPosts = renderPosts(posts, ejstemp.items.item, ejstemp.items.tag);
-	// res.send(ejs.render(ejstemp.base.index, {
-	// 	data: formattedPosts.join('\n')
-	// }));
 	res.send(renderPage('index', {
 		data: formattedPosts.join('\n')
 	}));
@@ -112,9 +83,6 @@ app.get('/sort', (req, res) => {
 app.post('/search', (req, res) => {
 	let search = req.body.q;
 	let posts = [];
-	// let base = fs.readFileSync('templates/base/index.ejs', 'utf8');
-	// let itemTemplate = fs.readFileSync('templates/items/item.ejs', 'utf8');
-	// let tagTemplate = fs.readFileSync('templates/items/tag.ejs', 'utf8');
 	let formattedPosts = [];
 
 	search = search.toLowerCase().split(' ');
@@ -128,9 +96,6 @@ app.post('/search', (req, res) => {
 		}
 	});
 	formattedPosts = renderPosts(posts, ejstemp.items.item, ejstemp.items.tag);
-	// res.send(ejs.render(ejstemp.base.index, {
-	// 	data: formattedPosts.join('\n')
-	// }));
 	res.send(renderPage('index', {
 		data: formattedPosts.join('\n')
 	}));
@@ -261,6 +226,7 @@ function getAllPosts() {
 			}
 			obj.file = i.replace('.md', '');
 			obj.content = fs.readFileSync('files/' + i, 'utf8').replace('\n', '<br>');
+			// obj.content = fs.readFileSync('files/' + i, 'utf8');
 			obj.date = db.getPostByName(i).date;
 			obj.utcDate = obj.date;
 			obj.time = formatAMPM(obj.date);
@@ -276,14 +242,14 @@ function sortAllPosts() {
 	sortedPosts = copy(newPosts);
 }
 
-fs.watch('files', (eventType, filename) => {
+fs.watch('files', {recursive: true}, () => {
 	let files = fs.readdirSync('files');
 	db.updatedb();
 	getAllPosts();
 	sortAllPosts();
 });
 
-fs.watch('templates', (eventType, filename) => {
+fs.watch('templates', () => {
 	updateEjsTemp();
 	console.log('Updated Templates');
 });
