@@ -46,7 +46,6 @@ a, a:visited {
 	flex-direction: column;
 	padding: 1vh 0.5vw;
 	width: 4vw;
-	/* height: calc(98vh - 2px); */
 	background-color: #cccbf6;
 }
 
@@ -244,7 +243,6 @@ a, a:visited {
 
 .post-details {
 	display: flex;
-	/* flex-direction: row; */
 	flex-direction: column;
 	justify-content: space-between;
 	color: grey;
@@ -281,14 +279,13 @@ a, a:visited {
 	}
 
 	.subtitle {
-		font-size: 20px;
 		margin-bottom: 10px;
+		font-size: 20px;
 	}
 
 	.side {
 		padding: 1vh 0.5vw;
 		width: 14vw;
-/* 		height: calc(98vh - 2px); */
 		height: 98vh;
 	}
 
@@ -301,10 +298,10 @@ a, a:visited {
 	}
 
 	.link-icon {
+		margin-bottom: 4vw;
 		margin-left: 2vw;
 		width: 10vw;
 		font-size: 30px;
-		margin-bottom: 4vw;
 	}
 
 	.logo {
@@ -317,9 +314,9 @@ a, a:visited {
 	}
 
 	.header {
+		flex-direction: column;
 		padding: 3%;
 		width: 94%;
-		flex-direction: column;
 	}
 
 	.list-item {
