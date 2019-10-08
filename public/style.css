@@ -46,7 +46,7 @@ a, a:visited {
 	flex-direction: column;
 	padding: 1vh 0.5vw;
 	width: 4vw;
-	height: calc(98vh - 2px);
+	/* height: calc(98vh - 2px); */
 	background-color: #cccbf6;
 }
 
@@ -143,9 +143,9 @@ a, a:visited {
 	justify-content: space-between;
 	margin: 0 auto;
 	padding: 1%;
-	width: 97%;
+	width: 98%;
 	height: min-content;
-	border-radius: 0 0 20px 20px;
+	/* border-radius: 0 0 20px 20px; */
 	background-color: #2e2cce;
 	box-shadow: 0 2px 4px 0 #00000094;
 	color: white;
@@ -281,14 +281,15 @@ a, a:visited {
 	}
 
 	.subtitle {
-		margin-bottom: 10px;
 		font-size: 20px;
+		margin-bottom: 10px;
 	}
 
 	.side {
 		padding: 1vh 0.5vw;
 		width: 14vw;
-		height: calc(98vh - 2px);
+/* 		height: calc(98vh - 2px); */
+		height: 98vh;
 	}
 
 	.sidebar {
@@ -300,10 +301,10 @@ a, a:visited {
 	}
 
 	.link-icon {
-		margin-bottom: 4vw;
 		margin-left: 2vw;
 		width: 10vw;
 		font-size: 30px;
+		margin-bottom: 4vw;
 	}
 
 	.logo {
@@ -312,14 +313,13 @@ a, a:visited {
 	}
 
 	.vertical {
-		margin-left: 2vw;
-		width: 79vw;
+		width: 100%;
 	}
 
 	.header {
-		flex-direction: column;
 		padding: 3%;
-		width: 97%;
+		width: 94%;
+		flex-direction: column;
 	}
 
 	.list-item {
@@ -329,12 +329,17 @@ a, a:visited {
 
 	.post-container {
 		display: flex;
-		overflow: scroll;
+		overflow: visi;
 		flex-direction: column;
 		margin: 0 auto;
-		padding: 0 20%;
+		padding: 0 0;
 		padding-top: 20px;
-		width: 60%;
+		width: 90%;
+	}
+
+	.post-title {
+		width: 100%;
+		font-size: 35px;
 	}
 
 	.post-content {
@@ -344,7 +349,7 @@ a, a:visited {
 	.post-content p {
 		margin: 1em 0;
 		color: #5d5d5d;
-		font-size: 18px;
+		font-size: 14px;
 		font-family: Apple;
 	}
 }
