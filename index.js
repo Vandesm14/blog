@@ -176,9 +176,12 @@ const db = {
 				if (dbNames.indexOf(fileNames[i]) !== -1) { // Create new file
 					ret.push(dbObj[dbNames.indexOf(fileNames[i])]);
 				} else { // Push old file
+					let dt = new Date();
+					dt.setTime(dt.getTime()-5*60*60*1000);
+					console.log(dt);
 					ret.push({
 						name: fileNames[i],
-						date: new Date().toISOString()
+						date: dt.toISOString()
 					});
 				}
 			}
@@ -208,26 +211,27 @@ function getAllPosts() {
 			return el.match('.json') === null;
 		})) {
 		let obj = {};
-		if (i.match('.json') === null) {
-			if (fs.existsSync('files/' + i.substr(0, i.length - 3) + '.json')) {
+		if (i.match('.json') === null) { // if json file is not present
+			if (fs.existsSync('files/' + i.substr(0, i.length - 3) + '.json')) { // if file exists
 				hold = JSON.parse(fs.readFileSync('files/' + i.substr(0, i.length - 3) + '.json', 'utf8'));
-			} else {
+			} else { // if file does not exist
 				hold = {title: undefined, date: undefined, tags: undefined};
 			}
-			if (hold !== undefined && hold.title !== undefined) {
+			if (hold && hold.title) {
 				obj.title = hold.title;
 			} else {
 				obj.title = toTitleCase(i.substr(0, i.length - 3).replace(/\-/g, ' '));
 			}
-			if (hold !== undefined && hold.tags !== undefined) {
+			if (hold && hold.tags) {
 				obj.tags = hold.tags;
 			} else {
 				obj.tags = ['#'];
 			}
+
 			obj.file = i.replace('.md', '');
 			obj.content = fs.readFileSync('files/' + i, 'utf8').replace('\n', '<br>');
 			// obj.content = fs.readFileSync('files/' + i, 'utf8');
-			obj.date = db.getPostByName(i).date;
+			obj.date = new Date(db.getPostByName(i).date);;
 			obj.utcDate = obj.date;
 			obj.time = formatAMPM(obj.date);
 			obj.date = new String(new Date(obj.date)).split(' ').splice(0, 3).join(' ');
@@ -314,7 +318,7 @@ function formatAMPM(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var ampm = hours >= 12 ? 'PM' : 'AM';
-	hours = hours + 8;
+	// hours = hours + 8;
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0'+minutes : minutes;
