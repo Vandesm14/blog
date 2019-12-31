@@ -43,7 +43,7 @@ a, a:visited {
 .header {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: space-between;
 	margin: 0 auto;
 	padding: 0.8% 1%;
 	width: 98%;
