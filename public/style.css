@@ -34,19 +34,72 @@ a, a:visited {
 
 .app {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	width: 100vw;
 	height: 100vh;
 }
 
-/* --------Sidebar-------- */
+/* --------Header-------- */
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin: 0 auto;
+	padding: 0.8% 1%;
+	width: 98%;
+	height: min-content;
+	background-color: #1977a9;
+	color: white;
+}
+
+.header > * {
+	margin: 0 10px;
+}
+
+.titlebox {
+	display: flex;
+	flex-direction: column;
+}
+
+.title {
+	font-size: 32px;
+}
+
+.subtitle {
+	color: #ffffffcc;
+	font-size: 18px;
+}
+
+.searchbox {
+	display: flex;
+	align-items: center;
+	/* margin-left: auto; */
+}
+
+.searchbox input {
+	padding: 8px;
+	width: 14vw;
+	height: 3vh;
+	border: none;
+	border-radius: 8px;
+}
+
+/* --------Horizontal-------- */
+.horizontal {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 100%;
+}
+
+/* -----Sidebar----- */
 .side {
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
-	padding: 1vh 0.5vw;
+	padding: 1vh 0;
 	width: 4vw;
-	background-color: #000000;
+	background-color: #474042;
 }
 
 .logo-container, .sidebar {
@@ -58,17 +111,14 @@ a, a:visited {
 	align-items: center;
 	flex-direction: row;
 	width: 4vw;
-	border-radius: 0px 6px 6px 0px;
+	border-radius: 0 6px 6px 0;
 	transition: 200ms ease-out;
 }
 
 .link-item:hover {
 	width: max-content;
-	background-color: white;
-	box-shadow: 0 0 3px black;
+	background-color: hsla(343, 2%, 40%, 1);
 }
-
-.link-item {}
 
 .link-icon {
 	margin-left: 1vw;
@@ -79,20 +129,17 @@ a, a:visited {
 }
 
 .link-item:hover .link-icon {
-	filter: invert(0);
 	transition: 200ms ease-out;
 }
 
 .link-item .link-button {
 	visibility: hidden;
 	margin: 0.5vw 2vw;
-	padding: 0.5vw 1vw;
-	max-width: 0;
+	padding: 0.3vw 1vw;
 	width: max-content;
-	background-color: white;
-	color: #000000;
+	color: white;
 	text-align: center;
-	opacity: 0;
+	font-size: 20px;
 	transition: 200ms ease-out;
 }
 
@@ -107,11 +154,11 @@ a, a:visited {
 }
 
 .logo-container {
-	display: flex;
+	display: none;
+	/* display: flex; */
 	align-items: center;
 	flex-direction: row;
 	justify-content: space-between;
-	width: 100%;
 }
 
 .logo {
@@ -133,42 +180,7 @@ a, a:visited {
 	margin: 15px 0;
 }
 
-/* --------Vertical-------- */
-.vertical {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-}
-
-.header {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin: 0 auto;
-	padding: 1%;
-	width: 98%;
-	height: min-content;
-	/* border-radius: 0 0 20px 20px; */
-	background-color: #000000;
-	/* box-shadow: 0 2px 4px 0 #00000094; */
-	color: white;
-}
-
-.titlebox {
-	display: flex;
-	flex-direction: column;
-}
-
-.title {
-	font-size: 32px;
-}
-
-.subtitle {
-	color: #ffffffcc;
-	font-size: 18px;
-}
-
-/* --------List-------- */
+/* -----List----- */
 .list-container {
 	display: flex;
 	overflow: scroll;
@@ -192,7 +204,7 @@ a, a:visited {
 }
 
 .list-item:hover {
-/* 	box-shadow: 0 9px 4px -4px #00000059; */
+	/* 	box-shadow: 0 9px 4px -4px #00000059; */
 	transform: scale(1.05);
 }
 
@@ -214,19 +226,15 @@ a, a:visited {
 	font-size: 14px;
 }
 
-.item-tags {
-	color: rgb(76, 133, 69);
-}
-
 .item-tags a {
-	color: rgb(76, 133, 69);
+	color: #1977a9;
 }
 
 .item-tags a:hover {
 	text-decoration: underline;
 }
 
-/* --------Post-------- */
+/* -----Post----- */
 .post-container {
 	display: flex;
 	overflow: scroll;
@@ -278,6 +286,17 @@ a, a:visited {
 
 /* ----------Mobile---------- */
 @media only screen and (max-device-width : 640px) {
+	.header {
+		flex-direction: column;
+		padding: 3%;
+		width: 94%;
+	}
+
+	.logo {
+		max-width: 14vw;
+		max-height: 11vw;
+	}
+
 	.title {
 		font-size: 30px;
 	}
@@ -285,6 +304,14 @@ a, a:visited {
 	.subtitle {
 		margin-bottom: 10px;
 		font-size: 20px;
+	}
+
+	.searchbox {
+		width: 90%;
+	}
+
+	.searchbox form, .searchbox input {
+		width: 100%;
 	}
 
 	.side {
@@ -302,25 +329,10 @@ a, a:visited {
 	}
 
 	.link-icon {
-		margin-bottom: 4vw;
+		margin: 1vw 0;
 		margin-left: 2vw;
 		width: 10vw;
 		font-size: 30px;
-	}
-
-	.logo {
-		max-width: 14vw;
-		max-height: 11vw;
-	}
-
-	.vertical {
-		width: 100%;
-	}
-
-	.header {
-		flex-direction: column;
-		padding: 3%;
-		width: 94%;
 	}
 
 	.list-item {
