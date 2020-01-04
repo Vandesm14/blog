@@ -1,10 +1,17 @@
-body {
+	html, body, .site, .app {
 	margin: 0;
 	padding: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+body {
+	background-color: white;
+	color: black;
 	font-family: Noto Sans, sans-serif;
 }
 
-body, div, h1, p {
+div, h1, p {
 	margin: 0;
 	padding: 0;
 }
@@ -12,6 +19,11 @@ body, div, h1, p {
 a, a:visited {
 	color: #0000dd;
 	text-decoration: none;
+}
+
+.site, .app {
+	display: flex;
+	flex-direction: column;
 }
 
 /* --------Scrollbar-------- */
@@ -30,14 +42,6 @@ a, a:visited {
 ::-webkit-scrollbar-thumb:hover {
 	background: #555555;
 }
-/* --------End Scrollbar-------- */
-
-.app {
-	display: flex;
-	flex-direction: column;
-	width: 100vw;
-	height: 100vh;
-}
 
 /* --------Header-------- */
 .header {
@@ -48,6 +52,7 @@ a, a:visited {
 	padding: 0.8% 1%;
 	width: 98%;
 	height: min-content;
+	/* height: 14vh; */
 	background-color: #1977a9;
 	color: white;
 }
@@ -90,6 +95,7 @@ a, a:visited {
 	flex-direction: row;
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 }
 
 /* -----Sidebar----- */
@@ -100,6 +106,20 @@ a, a:visited {
 	padding: 1vh 0;
 	width: 4vw;
 	background-color: #474042;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	justify-content: right;
+	margin-left: 0;
+}
+
+.sidebar-section {
+	display: flex;
+	flex-direction: column;
+	justify-content: right;
+	margin: 15px 0;
 }
 
 .logo-container, .sidebar {
@@ -166,20 +186,6 @@ a, a:visited {
 	max-height: 4vw;
 }
 
-.sidebar {
-	display: flex;
-	flex-direction: column;
-	justify-content: right;
-	margin-left: 0;
-}
-
-.sidebar-section {
-	display: flex;
-	flex-direction: column;
-	justify-content: right;
-	margin: 15px 0;
-}
-
 /* -----List----- */
 .list-container {
 	display: flex;
@@ -188,6 +194,7 @@ a, a:visited {
 	margin-bottom: 10px;
 	padding-top: 10px;
 	width: 100%;
+	height: 100%;
 }
 
 .list-item {
@@ -199,12 +206,12 @@ a, a:visited {
 	height: min-content;
 	border-radius: 4px;
 	background-color: #eaeaea;
-	/* box-shadow: 0 1px 3px 1px #00000059; */
+	box-shadow: 0 1px 3px 1px #00000059;
 	transition: 200ms ease-out;
 }
 
 .list-item:hover {
-	/* 	box-shadow: 0 9px 4px -4px #00000059; */
+	/* 	box-shadow: 0 9px 4px 4px #00000059; */
 	transform: scale(1.05);
 }
 
@@ -232,6 +239,20 @@ a, a:visited {
 
 .item-tags a:hover {
 	text-decoration: underline;
+}
+
+.page-list {
+	display: flex;
+	flex-direction: row;
+	margin: 10px 10%;
+	padding: 10px;
+	width: 50%;
+	height: min-content;
+	flex-wrap: wrap;
+}
+
+.page-list > * {
+	margin: 0 4px;
 }
 
 /* -----Post----- */

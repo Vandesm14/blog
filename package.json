@@ -7,9 +7,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "latest",
     "body-parser": "latest",
     "ejs": "latest",
+    "express": "latest",
     "showdown": "latest"
   }
 }

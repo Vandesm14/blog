@@ -1,0 +1,21 @@
+<div class="list-container">
+	<% for (let i in posts) { %>
+		<div class="list-item">
+			<a class="item-title" href="/<%= encodeURIComponent(posts[i].name.toLowerCase().replace(/[^\w,\s]/g, '').replace(/\s/g, '-')) %>/<%= posts[i].id %>"><%= posts[i].name %></a>
+			<div class="item-details">
+				<p class="item-date"><%= posts[i].date %></p>
+				<p class="item-tags">
+					<% for(let k in posts[i].tags) { %>
+						<a href="/tag?q=<%= posts[i].tags[k] %>"><%= posts[i].tags[k] %></a><%= k < posts[i].tags.length - 1 ? ', ' : '' %>
+					<% } %>
+				</p>
+			</div>
+		</div>
+	<% } %>
+	<div class="page-list">
+		Pages: 
+		<% for (let i = 0; i < pages; i++) { %>
+			<a href="/page/<%= +i+1 %>"><%= +i+1 %></a>
+		<% } %>
+	</div>
+</div>

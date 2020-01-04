@@ -1,0 +1,18 @@
+<div class="post-container">
+		<div class="post-item">
+			<p class="post-title" href="/p/<%= post.id %>"><%= post.name %></p>
+			<div class="post-details">
+				<p class="post-date"><%= post.date %></p>
+				<p class="post-tags">
+					<% for(let i in post.tags) { %>
+						<a href="/tag?q=<%= post.tags[i] %>"><%= post.tags[i] %></a>
+					<% } %>
+				</p>
+			</div>
+			<div class="post-content">
+				<div class="markdown-body">
+					<%- post.content %>
+				</div>
+			</div>
+		</div>
+</div>
