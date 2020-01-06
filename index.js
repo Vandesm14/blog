@@ -10,6 +10,7 @@ converter.setFlavor('github');
 
 var posts = [];
 var pages = 1;
+var date;
 
 const app = express();
 
@@ -71,6 +72,16 @@ app.get('/tag', (req, res) => {
 	res.render(__dirname + '/includes/frames/index.ejs', { posts: filteredPosts, pages });
 });
 
+app.get('/api', (req, res) => {
+	res.send('Last fetched: ' + date);
+});
+
+app.get('/apiGet', (req, res) => {
+	getPosts(() => {
+		res.send('Last fetched: ' + date);
+	});
+});
+
 getPosts(() => {
 	app.listen(3000, () => console.log('server started'));
 });
@@ -78,10 +89,8 @@ getPosts(() => {
 function getPosts(callback) {
 	request('https://blog-server.vandesm14.repl.co', function (error, response, body) {
 		posts = JSON.parse(body);
+		date = new Date();
+		console.log('Last fetched: ' + date);
 		callback();
 	});
 }
-
-// fs.watch('files', { recursive: true }, () => {
-// 	getPosts();
-// });
