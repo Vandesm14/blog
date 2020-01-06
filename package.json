@@ -10,6 +10,7 @@
     "body-parser": "latest",
     "ejs": "latest",
     "express": "latest",
+    "request": "^2.88.0",
     "showdown": "latest"
   }
 }

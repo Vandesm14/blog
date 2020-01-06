@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const ejs = require('ejs');
 const showdown = require('showdown');
+const request = require('request');
 
 var converter = new showdown.Converter();
 converter.setFlavor('github');
@@ -70,34 +71,15 @@ app.get('/tag', (req, res) => {
 	res.render(__dirname + '/includes/frames/index.ejs', { posts: filteredPosts, pages });
 });
 
-getPosts();
+getPosts(() => {
+	app.listen(3000, () => console.log('server started'));
+});
 
-app.listen(3000, () => console.log('server started'));
-
-function getPosts() {
-	let files = fs.readdirSync('files');
-	files = files.filter(el => el.match('.md'));
-	let values = ['title', 'date', 'tags'];
-
-	for (let i in files) {
-		let file = fs.readFileSync('files/' + files[i], 'utf8');
-		let obj = {};
-		let data = file.split('\n')[0];
-		data = data.split(' :: ');
-		data = {
-			name: data[0],
-			date: data[1],
-			tags: data[2].split(','),
-			id: parseInt(files[i].split('_')[0]),
-			content: converter.makeHtml(file.split('\n').slice(1).join('\n'))
-		};
-
-		files[i] = data;
-	}
-
-	files.sort((a, b) => a.id > b.id ? -1 : 1);
-	posts = [...files];
-	pages = Math.ceil(posts.length / 20);
+function getPosts(callback) {
+	request('https://blog-server.vandesm14.repl.co', function (error, response, body) {
+		posts = JSON.parse(body);
+		callback();
+	});
 }
 
 // fs.watch('files', { recursive: true }, () => {
