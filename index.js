@@ -89,7 +89,7 @@ function getPosts() {
 			date: data[1],
 			tags: data[2].split(','),
 			id: parseInt(files[i].split('_')[0]),
-			content: file.split('\n').slice(1).join('\n')
+			content: converter.makeHtml(file.split('\n').slice(1).join('\n'))
 		};
 
 		files[i] = data;
