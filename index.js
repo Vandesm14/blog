@@ -35,6 +35,16 @@ app.get('/page/:page', (req, res) => {
 	res.render(__dirname + '/includes/frames/index.ejs', { posts: posts.slice(page*20 - 20, page*20), pages });
 });
 
+app.get('/api/page/:page', (req, res) => {
+	let page = req.params.page;
+	let ret = copy(posts.slice(page*20 - 20, page*20));
+	ret.forEach(el => {el.content = el.content.substr(0, 200); el.url = `/${encodeURIComponent(el.name.toLowerCase().replace(/[^\w,\s]/g, '').replace(/\s/g, '-'))}/${el.id}`});
+	ret.forEach(el => {el.url = `/${encodeURIComponent(el.name.toLowerCase().replace(/[^\w,\s]/g, '').replace(/\s/g, '-'))}/${el.id}`});
+
+	res.header("Access-Control-Allow-Origin", "*");
+	res.send(ret);
+});
+
 app.get('/:name/:id', (req, res) => {
 	let name = req.params.name;
 	let id = parseInt(req.params.id);
@@ -93,4 +103,8 @@ function getPosts(callback) {
 		console.log('Last fetched: ' + date);
 		callback();
 	});
+}
+
+function copy(obj) {
+	return JSON.parse(JSON.stringify(obj));
 }
