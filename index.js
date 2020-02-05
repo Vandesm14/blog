@@ -102,6 +102,7 @@ function getPosts(callback) {
 		date = new Date();
 		console.log('Last fetched: ' + date);
 		callback();
+		posts.forEach(el => el.content = converter.makeHtml(el.content));
 	});
 }
 
