@@ -1,4 +1,4 @@
-	html, body, .site, .app {
+html, body, .site, .app {
 	margin: 0;
 	padding: 0;
 	width: 100vw;
@@ -209,16 +209,16 @@ a, a:visited {
 	/* flex: 1; */
 	width: 50%;
 	height: min-content;
-	/* border-radius: 4px; */
-	/* background-color: #eaeaea; */
-	/* box-shadow: 0 1px 3px 0px #00000044; */
+	border-radius: 6px;
+	background-color: #fff9d3;
+	box-shadow: 0 2px 4px 0px #b5a943a8;
 	transition: 200ms ease-out;
-	border-bottom: 1px solid #00000044;
+	/* border-bottom: 1px solid #00000044; */
 }
 
 .list-item:hover {
 	/* 	box-shadow: 0 9px 4px 4px #00000059; */
-	transform: scale(1.05);
+	transform: scale(1.03);
 }
 
 .item-title {
