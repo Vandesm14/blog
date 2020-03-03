@@ -48,13 +48,15 @@ a, a:visited {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	position: fixed;
 	margin: 0 auto;
 	padding: 0.8% 1%;
 	width: 98%;
-	height: min-content;
-	/* height: 14vh; */
+	height: 60px;
+	/* height: 5vw; */
 	background-color: #37a8e4;
 	color: white;
+	z-index: 1;
 }
 
 .header > * {
@@ -96,6 +98,8 @@ a, a:visited {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	z-index: 0;
+	margin-top: 80px;
 }
 
 /* -----Sidebar----- */
@@ -105,7 +109,9 @@ a, a:visited {
 	flex-direction: column;
 	padding: 1vh 0;
 	width: 4vw;
-	background-color: #595b6b;
+	position: fixed;
+	background-color: #686365;
+	height: 100%;
 }
 
 .sidebar {
@@ -137,12 +143,12 @@ a, a:visited {
 
 .link-item:hover {
 	width: max-content;
-	background-color: hsla(343, 2%, 40%, 1);
+	background-color: #686365;
 }
 
 .link-icon {
-	margin-left: 1vw;
-	width: 2vw;
+	margin-left: 0.5vw;
+	width: 2.8vw;
 	text-align: center;
 	font-size: 30px;
 	filter: invert(1);
@@ -177,7 +183,7 @@ a, a:visited {
 	display: none;
 	/* display: flex; */
 	align-items: center;
-	flex-direction: row;
+	flex-directaion: row;
 	justify-content: space-between;
 }
 
@@ -189,12 +195,15 @@ a, a:visited {
 /* -----List----- */
 .list-container {
 	display: flex;
-	overflow: scroll;
-	flex-direction: column;
-	margin-bottom: 10px;
+	overflow-y: auto;
+	align-items: normal;
+	/* margin-bottom: 10px; */
+	margin-left: 3vw;
 	padding-top: 10px;
 	width: 100%;
-	height: 100%;
+	flex-wrap: wrap;
+	justify-content: center;
+	height: max-content;
 }
 
 .list-container > a {
@@ -204,16 +213,16 @@ a, a:visited {
 .list-item {
 	display: flex;
 	flex-direction: column;
-	margin: 10px 10%;
-	padding: 10px;
+	margin: 10px 1%;
+	padding: 14px;
 	/* flex: 1; */
-	width: 50%;
+	width: 34%;
 	height: min-content;
-	border-radius: 6px;
-	background-color: #efefef;
-	box-shadow: 0 2px 4px 0px #808080a8;
+	border-radius: 10px;
+	/* background-color: #ffffff; */
+	box-shadow: 0 2px 10px 0px #00000026;
 	transition: 200ms ease-out;
-	/* border-bottom: 1px solid #00000044; */
+	/* border: 1px solid #000000; */
 }
 
 .list-item:hover {
@@ -224,7 +233,7 @@ a, a:visited {
 .item-title {
 	color: #333232 !important;
 	/* width: max-content; */
-	font-size: 24px;
+	font-size: 26px;
 }
 
 .item-title:hover {
@@ -273,6 +282,7 @@ a, a:visited {
 	overflow: scroll;
 	flex-direction: column;
 	margin: 0 auto;
+	margin-left: 4vw;
 	padding: 0 20%;
 	padding-top: 20px;
 	width: 60%;
@@ -319,6 +329,7 @@ a, a:visited {
 		flex-direction: column;
 		padding: 3%;
 		width: 94%;
+		height: 104px;
 	}
 
 	.logo {
@@ -343,9 +354,13 @@ a, a:visited {
 		width: 100%;
 	}
 
+	.horizontal {
+		margin-top: 122px;
+	}
+
 	.side {
 		padding: 1vh 0.5vw;
-		width: 14vw;
+		width: 13vw;
 		height: 98vh;
 	}
 
@@ -364,6 +379,11 @@ a, a:visited {
 		font-size: 30px;
 	}
 
+    .list-container {
+	    margin-left: 15vw;
+	    height: auto;
+    }
+
 	.list-item {
 		padding: 6px;
 		width: 80%;
@@ -374,7 +394,8 @@ a, a:visited {
 		overflow: visi;
 		flex-direction: column;
 		margin: 0 auto;
-		padding: 0 0;
+		margin-left: 15vw;
+		padding: 0px 10px;
 		padding-top: 20px;
 		width: 90%;
 	}
