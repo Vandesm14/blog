@@ -53,7 +53,7 @@ a, a:visited {
 	width: 98%;
 	height: min-content;
 	/* height: 14vh; */
-	background-color: #1977a9;
+	background-color: #37a8e4;
 	color: white;
 }
 
@@ -105,7 +105,7 @@ a, a:visited {
 	flex-direction: column;
 	padding: 1vh 0;
 	width: 4vw;
-	background-color: #474042;
+	background-color: #595b6b;
 }
 
 .sidebar {
@@ -210,8 +210,8 @@ a, a:visited {
 	width: 50%;
 	height: min-content;
 	border-radius: 6px;
-	background-color: #fff9d3;
-	box-shadow: 0 2px 4px 0px #b5a943a8;
+	background-color: #efefef;
+	box-shadow: 0 2px 4px 0px #808080a8;
 	transition: 200ms ease-out;
 	/* border-bottom: 1px solid #00000044; */
 }
