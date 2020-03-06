@@ -23,7 +23,6 @@ app.use(bodyParser.urlencoded({
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use('/:name/:id', express.static('public'));
 
 app.get('/', (req, res) => {
 	res.render(__dirname + '/includes/frames/index.ejs', { posts: posts.slice(0,20), pages });
