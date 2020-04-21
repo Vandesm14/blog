@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+
+	<channel>
+		<title>Vandesm14</title>
+		<link>https://blog.vandesm14.ml</link>
+		<description>The blog of Shane Vandegrift</description>
+		<% for (let i in posts) { %>
+		<item>
+			<title><%= posts[i].name %></title>
+			<link>https://blog.vandesm14.ml/<%= posts[i].url %></link>
+			<guid>https://blog.vandesm14.ml/<%= posts[i].url %></guid>
+			<pubDate><%= new Date(posts[i].date).toUTCString() %></pubDate>
+			<content:encoded><![CDATA[<%- posts[i].content %>]]></content:encoded>
+		</item>
+		<% } %>
+	</channel>
+
+</rss>
